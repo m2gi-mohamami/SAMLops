@@ -54,6 +54,21 @@ class DataFrame {
         }
     }
 
+    // Method to display the first n rows of the dataframe
+    public void displayFirstRows(int n) {
+        for (String col : columns) {
+            System.out.print(col + "\t");
+        }
+        System.out.println();
+        for (int i = 0; i < Math.min(n, data.size()); i++) {
+            List<Object> row = data.get(i);
+            for (Object value : row) {
+                System.out.print(value.toString() + "\t");
+            }
+            System.out.println();
+        }
+    }
+
     public List<String> getColumns() {
         return columns;
     }
