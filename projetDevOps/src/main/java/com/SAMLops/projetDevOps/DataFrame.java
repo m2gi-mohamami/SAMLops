@@ -39,4 +39,20 @@ class DataFrame {
         return columnTypes;
     }
 
+
+    // Method to display the entire dataframe
+    public void display() {
+        for (String col : columns) {
+            System.out.print(col + "\t");
+        }
+        System.out.println();
+        for (List<Object> row : data) {
+            for (Object value : row) {
+                System.out.print(value.toString() + "\t");
+            }
+            System.out.println();
+        }
+    }
+
+
 }
