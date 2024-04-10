@@ -34,6 +34,25 @@ public class DataFrameTest extends TestCase {
         super.tearDown();
     }
 
+    public void testDetermineColumnTypes() {
+        List<String> columns = Arrays.asList("Name", "Age", "Salary", "PartTime");
+        List<List<Object>> data = Arrays.asList(
+            Arrays.asList("Alice", 30, 2500.0, true),
+            Arrays.asList("Bob", 29, 3200, false), // Mixed integer and double for Salary
+            Arrays.asList("Charlie", 25, 2800.0, false)
+        );
+
+        DataFrame df = new DataFrame(columns, data);
+
+        // Assuming getColumnTypes is a public method you've added for testing
+        List<Class<?>> columnTypes = df.getColumnTypes();
+
+        assertEquals(String.class, columnTypes.get(0)); // Name column type
+        assertEquals(Integer.class, columnTypes.get(1)); // Age column type
+        assertEquals(Double.class, columnTypes.get(2)); // Salary column type, expecting Double because of mix
+        assertEquals(Boolean.class, columnTypes.get(3)); // PartTime column type
+    }
+    
     public void testDisplay() {
         List<String> columns = Arrays.asList("Name", "Age", "Travail", "Salaire");
         List<List<Object>> data = Arrays.asList(
