@@ -6,8 +6,9 @@ import junit.framework.TestSuite;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-import java.util.Arrays;
-import java.util.List;
+// import java.util.Arrays;
+// import java.util.List;
+import java.util.*;
 
 public class DataFrameTest extends TestCase {
 
@@ -65,6 +66,33 @@ public class DataFrameTest extends TestCase {
         df.display();
 
         String expectedOutput = "Name\tAge\tTravail\tSalaire\t\nAlice\t30\tcaissiere\t1800\t\nBob\t29\tcomptable\t2500\t\nCharlie\t25\tdeveloppeur\t3000\t\n";
+        assertEquals(expectedOutput.trim(), outContent.toString().trim());
+    }
+
+    public void testDisplayFirstRows() {
+        List<String> columns = Arrays.asList("Name", "Age", "Score");
+        List<List<Object>> data = Arrays.asList(
+            Arrays.asList("Alice", 30, 85.5),
+            Arrays.asList("Bob", 22, 89.2),
+            Arrays.asList("Charlie", 25, 92),
+            Arrays.asList("Diana", 28, 88.8)
+        );
+
+        DataFrame df = new DataFrame(columns, data);
+
+        //L'affichage des 2 premières lignes
+        df.displayFirstRows(2);
+
+        String expectedOutput = "Name\tAge\tScore\t\nAlice\t30\t85.5\t\nBob\t22\t89.2\t\n";
+        assertEquals(expectedOutput.trim(), outContent.toString().trim());
+
+        // Nettoyage pour le prochain test
+        outContent.reset();
+
+        // L'affichage avec un nombre de lignes demandé supérieur au nombre de lignes disponibles
+        df.displayFirstRows(5); 
+
+        expectedOutput = "Name\tAge\tScore\t\nAlice\t30\t85.5\t\nBob\t22\t89.2\t\nCharlie\t25\t92\t\nDiana\t28\t88.8\t\n";
         assertEquals(expectedOutput.trim(), outContent.toString().trim());
     }
 }
