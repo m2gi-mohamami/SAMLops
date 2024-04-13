@@ -1,6 +1,7 @@
 package com.SAMLops.projetDevOps;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.PrintStream;
 // import java.util.Arrays;
 // import java.util.List;
@@ -123,6 +124,7 @@ public class DataFrameTest extends TestCase {
     }
 
 
+
     public void testSelectRowsByIndices() {
         List<String> columns = Arrays.asList("Name", "Age", "Score");
         List<List<Object>> data = Arrays.asList(
@@ -142,4 +144,27 @@ public class DataFrameTest extends TestCase {
         assertEquals(expectedDf.getData(), selectedDf.getData());
     }
     
+    public void testCSVConstructor() throws IOException {
+        String path = "src/test/resources/csvFile.csv"; // Chemin vers un
+        // fichier CSV
+        // fictif pour le test
+        DataFrame df = new DataFrame(path);
+
+        // Test de lecture des noms de colonnes
+        List<String> expectedColumns = Arrays.asList("Nom", "Age", "Ville");
+        assertEquals(expectedColumns, df.getColumns());
+
+        // Test des types de colonnes déduits
+        List<Class<?>> expectedTypes = Arrays.asList(String.class, Integer.class, String.class);
+        assertEquals(expectedTypes, df.getColumnTypes());
+
+        // Test de conversion des données
+        List<List<Object>> expectedData = Arrays.asList(
+                Arrays.asList("John Doe", 30, "New York"),
+                Arrays.asList("Jane Smith", 25, "London"),
+                Arrays.asList("Alice Johnson", 35, "Paris"),
+                Arrays.asList("Bob Anderson", 40, "Tokyo")); // Remove space after 'Anderson'
+        assertEquals(expectedData, df.getData());
+    }
+
 }
