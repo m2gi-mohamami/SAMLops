@@ -1,14 +1,15 @@
 package com.SAMLops.projetDevOps;
 
-import junit.framework.TestCase;
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 // import java.util.Arrays;
 // import java.util.List;
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 public class DataFrameTest extends TestCase {
 
@@ -38,10 +39,9 @@ public class DataFrameTest extends TestCase {
     public void testDetermineColumnTypes() {
         List<String> columns = Arrays.asList("Name", "Age", "Salary", "PartTime");
         List<List<Object>> data = Arrays.asList(
-            Arrays.asList("Alice", 30, 2500.0, true),
-            Arrays.asList("Bob", 29, 3200, false), // Mixed integer and double for Salary
-            Arrays.asList("Charlie", 25, 2800.0, false)
-        );
+                Arrays.asList("Alice", 30, 2500.0, true),
+                Arrays.asList("Bob", 29, 3200, false), // Mixed integer and double for Salary
+                Arrays.asList("Charlie", 25, 2800.0, false));
 
         DataFrame df = new DataFrame(columns, data);
 
@@ -53,14 +53,13 @@ public class DataFrameTest extends TestCase {
         assertEquals(Double.class, columnTypes.get(2)); // Salary column type, expecting Double because of mix
         assertEquals(Boolean.class, columnTypes.get(3)); // PartTime column type
     }
-    
+
     public void testDisplay() {
         List<String> columns = Arrays.asList("Name", "Age", "Travail", "Salaire");
         List<List<Object>> data = Arrays.asList(
-            Arrays.asList("Alice", 30, "caissiere", 1800),
-            Arrays.asList("Bob", 29, "comptable", 2500),
-            Arrays.asList("Charlie", 25, "developpeur", 3000)
-        );
+                Arrays.asList("Alice", 30, "caissiere", 1800),
+                Arrays.asList("Bob", 29, "comptable", 2500),
+                Arrays.asList("Charlie", 25, "developpeur", 3000));
 
         DataFrame df = new DataFrame(columns, data);
         df.display();
@@ -72,15 +71,14 @@ public class DataFrameTest extends TestCase {
     public void testDisplayFirstRows() {
         List<String> columns = Arrays.asList("Name", "Age", "Score");
         List<List<Object>> data = Arrays.asList(
-            Arrays.asList("Alice", 30, 85.5),
-            Arrays.asList("Bob", 22, 89.2),
-            Arrays.asList("Charlie", 25, 92),
-            Arrays.asList("Diana", 28, 88.8)
-        );
+                Arrays.asList("Alice", 30, 85.5),
+                Arrays.asList("Bob", 22, 89.2),
+                Arrays.asList("Charlie", 25, 92),
+                Arrays.asList("Diana", 28, 88.8));
 
         DataFrame df = new DataFrame(columns, data);
 
-        //L'affichage des 2 premières lignes
+        // L'affichage des 2 premières lignes
         df.displayFirstRows(2);
 
         String expectedOutput = "Name\tAge\tScore\t\nAlice\t30\t85.5\t\nBob\t22\t89.2\t\n";
@@ -89,8 +87,36 @@ public class DataFrameTest extends TestCase {
         // Nettoyage pour le prochain test
         outContent.reset();
 
-        // L'affichage avec un nombre de lignes demandé supérieur au nombre de lignes disponibles
-        df.displayFirstRows(5); 
+        // L'affichage avec un nombre de lignes demandé supérieur au nombre de lignes
+        // disponibles
+        df.displayFirstRows(5);
+
+        expectedOutput = "Name\tAge\tScore\t\nAlice\t30\t85.5\t\nBob\t22\t89.2\t\nCharlie\t25\t92\t\nDiana\t28\t88.8\t\n";
+        assertEquals(expectedOutput.trim(), outContent.toString().trim());
+    }
+
+    public void testDisplayLastRows() {
+        List<String> columns = Arrays.asList("Name", "Age", "Score");
+        List<List<Object>> data = Arrays.asList(
+                Arrays.asList("Alice", 30, 85.5),
+                Arrays.asList("Bob", 22, 89.2),
+                Arrays.asList("Charlie", 25, 92),
+                Arrays.asList("Diana", 28, 88.8));
+
+        DataFrame df = new DataFrame(columns, data);
+
+        // Affichage des 2 dernières lignes
+        df.displayLastRows(2);
+
+        String expectedOutput = "Name\tAge\tScore\t\nCharlie\t25\t92\t\nDiana\t28\t88.8\t\n";
+        assertEquals(expectedOutput.trim(), outContent.toString().trim());
+
+        // Nettoyage pour le prochain test
+        outContent.reset();
+
+        // Affichage des dernières lignes avec un nombre de lignes demandé supérieur au
+        // nombre de lignes disponibles
+        df.displayLastRows(5);
 
         expectedOutput = "Name\tAge\tScore\t\nAlice\t30\t85.5\t\nBob\t22\t89.2\t\nCharlie\t25\t92\t\nDiana\t28\t88.8\t\n";
         assertEquals(expectedOutput.trim(), outContent.toString().trim());
