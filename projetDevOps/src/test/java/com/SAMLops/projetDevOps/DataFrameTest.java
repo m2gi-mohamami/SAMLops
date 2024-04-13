@@ -1,6 +1,7 @@
 package com.SAMLops.projetDevOps;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.PrintStream;
 // import java.util.Arrays;
 // import java.util.List;
@@ -121,4 +122,28 @@ public class DataFrameTest extends TestCase {
         expectedOutput = "Name\tAge\tScore\t\nAlice\t30\t85.5\t\nBob\t22\t89.2\t\nCharlie\t25\t92\t\nDiana\t28\t88.8\t\n";
         assertEquals(expectedOutput.trim(), outContent.toString().trim());
     }
+
+    public void testCSVConstructor() throws IOException {
+        String path = "src/test/resources/csvFile.csv"; // Chemin vers un
+        // fichier CSV
+        // fictif pour le test
+        DataFrame df = new DataFrame(path);
+
+        // Test de lecture des noms de colonnes
+        List<String> expectedColumns = Arrays.asList("Nom", "Age", "Ville");
+        assertEquals(expectedColumns, df.getColumns());
+
+        // Test des types de colonnes déduits
+        List<Class<?>> expectedTypes = Arrays.asList(String.class, Integer.class, String.class);
+        assertEquals(expectedTypes, df.getColumnTypes());
+
+        // Test de conversion des données
+        List<List<Object>> expectedData = Arrays.asList(
+                Arrays.asList("John Doe", 30, "New York"),
+                Arrays.asList("Jane Smith", 25, "London"),
+                Arrays.asList("Alice Johnson", 35, "Paris"),
+                Arrays.asList("Bob Anderson", 40, "Tokyo")); // Remove space after 'Anderson'
+        assertEquals(expectedData, df.getData());
+    }
+
 }
