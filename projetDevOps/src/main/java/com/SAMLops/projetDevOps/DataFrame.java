@@ -153,6 +153,21 @@ class DataFrame {
         }
     }
 
+
+    /******************SELECTION*********************/
+
+    //ROWS 
+    public DataFrame selectRowsByIndices(List<Integer> indices) {
+        List<List<Object>> newData = new ArrayList<>();
+        for (int index : indices) {
+            if (index >= 0 && index < data.size()) {
+                newData.add(new ArrayList<>(data.get(index)));
+            }
+        }
+        return new DataFrame(new ArrayList<>(columns), newData);
+    }
+    
+
     public List<String> getColumns() {
         return columns;
     }

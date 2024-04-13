@@ -123,6 +123,27 @@ public class DataFrameTest extends TestCase {
         assertEquals(expectedOutput.trim(), outContent.toString().trim());
     }
 
+
+
+    public void testSelectRowsByIndices() {
+        List<String> columns = Arrays.asList("Name", "Age", "Score");
+        List<List<Object>> data = Arrays.asList(
+                Arrays.asList("Alice", 30, 85.5),
+                Arrays.asList("Bob", 22, 89.2),
+                Arrays.asList("Charlie", 25, 92));
+    
+        DataFrame df = new DataFrame(columns, data);
+        DataFrame selectedDf = df.selectRowsByIndices(Arrays.asList(0, 2)); // Selecting rows for Alice and Charlie
+    
+        List<List<Object>> expectedData = Arrays.asList(
+                Arrays.asList("Alice", 30, 85.5),
+                Arrays.asList("Charlie", 25, 92));
+    
+        DataFrame expectedDf = new DataFrame(columns, expectedData);
+    
+        assertEquals(expectedDf.getData(), selectedDf.getData());
+    }
+    
     public void testCSVConstructor() throws IOException {
         String path = "src/test/resources/csvFile.csv"; // Chemin vers un
         // fichier CSV
