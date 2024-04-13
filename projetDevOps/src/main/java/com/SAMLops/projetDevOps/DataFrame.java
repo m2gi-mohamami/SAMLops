@@ -1,6 +1,7 @@
 package com.SAMLops.projetDevOps;
-import java.util.List;
+
 import java.util.ArrayList;
+import java.util.List;
 
 // Define a class to represent a DataFrame
 class DataFrame {
@@ -39,7 +40,6 @@ class DataFrame {
         return columnTypes;
     }
 
-
     // Method to display the entire dataframe
     public void display() {
         for (String col : columns) {
@@ -61,6 +61,20 @@ class DataFrame {
         }
         System.out.println();
         for (int i = 0; i < Math.min(n, data.size()); i++) {
+            List<Object> row = data.get(i);
+            for (Object value : row) {
+                System.out.print(value.toString() + "\t");
+            }
+            System.out.println();
+        }
+    }
+
+    public void displayLastRows(int n) {
+        for (String col : columns) {
+            System.out.print(col + "\t");
+        }
+        System.out.println();
+        for (int i = Math.max(0, data.size() - n); i < data.size(); i++) {
             List<Object> row = data.get(i);
             for (Object value : row) {
                 System.out.print(value.toString() + "\t");
@@ -92,6 +106,5 @@ class DataFrame {
     public void setColumnTypes(List<Class<?>> columnTypes) {
         this.columnTypes = columnTypes;
     }
-
 
 }
