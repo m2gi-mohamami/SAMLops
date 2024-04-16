@@ -166,8 +166,80 @@ class DataFrame {
         }
         return new DataFrame(new ArrayList<>(columns), newData);
     }
-    
 
+    /*Statistique functions */
+    //fontion qui calcule le moyennage
+    public Double calculateMean(String columnName) throws IndexOutOfBoundsException {
+        int columnIndex = columns.indexOf(columnName);
+        if (columnIndex == -1) throw new IndexOutOfBoundsException("Column not found: " + columnName);
+        if (!isValidNumericColumn(columnIndex)) {
+            throw new IllegalArgumentException("Column must be of type Integer or Double");
+        }
+        double sum = 0;
+        int count = 0;
+        for (List<Object> row : data) {
+            try {
+                Object value = row.get(columnIndex);
+                if (value instanceof Number) {
+                    sum += ((Number) value).doubleValue();
+                    count++;
+                }
+            } catch (IndexOutOfBoundsException e) {
+                System.err.println(e.getMessage());
+            }
+        }
+        return count > 0 ? sum / count : null;
+    }
+    
+    //fonction qui calcule la minima de column selected
+    public Object calculateMin(String columnName) throws IndexOutOfBoundsException {
+        int columnIndex = columns.indexOf(columnName);
+        if (columnIndex == -1) throw new IndexOutOfBoundsException("Column not found: " + columnName);
+        if (!isValidNumericColumn(columnIndex)) {
+            throw new IllegalArgumentException("Column must be of type Integer or Double");
+        }
+        Object min = null;
+        for (List<Object> row : data) {
+            try {
+                Object value = row.get(columnIndex);
+                if (value instanceof Comparable && (min == null || ((Comparable) value).compareTo(min) < 0)) {
+                    min = value;
+                }
+            } catch (IndexOutOfBoundsException e) {
+                System.err.println(e.getMessage());
+            }
+        }
+        return min;
+    }
+    
+    //fonction qui calcule la maxima de column selected
+    public Object calculateMax(String columnName) throws IndexOutOfBoundsException {
+        int columnIndex = columns.indexOf(columnName);
+        if (columnIndex == -1) throw new IndexOutOfBoundsException("Column not found: " + columnName);
+        if (!isValidNumericColumn(columnIndex)) {
+            throw new IllegalArgumentException("Column must be of type Integer or Double");
+        }
+        Object max = null;
+        for (List<Object> row : data) {
+            try {
+                Object value = row.get(columnIndex);
+                if (value instanceof Comparable && (max == null || ((Comparable) value).compareTo(max) > 0)) {
+                    max = value;
+                }
+            } catch (IndexOutOfBoundsException e) {
+                System.err.println(e.getMessage());
+            }
+        }
+        return max;
+    }
+    
+    //fonction qui verifie si le colonne est numérique ou pas
+    public boolean isValidNumericColumn(int columnIndex) {
+        Class<?> columnType = columnTypes.get(columnIndex);
+        return columnType.equals(Integer.class) || columnType.equals(Double.class);
+    }
+    
+    
     public List<String> getColumns() {
         return columns;
     }
