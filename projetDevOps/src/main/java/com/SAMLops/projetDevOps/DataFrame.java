@@ -118,8 +118,24 @@ class DataFrame {
     
         return new DataFrame(selectedColumns, newData);
     }
+
+
+    public DataFrame advancedSelectionWithColumnValue(String columnName, Object value) {
+        int columnIndex = columns.indexOf(columnName);
+        if (columnIndex == -1) {
+            return null; // Column not found
+        }
     
+        List<List<Object>> newData = new ArrayList<>();
+        for (List<Object> row : data) {
+            if (row.get(columnIndex).equals(value)) {
+                newData.add(new ArrayList<>(row));
+            }
+        }
     
+        return new DataFrame(new ArrayList<>(columns), newData);
+    }
+     
 
     public List<String> getColumns() {
         return columns;

@@ -164,6 +164,27 @@ public class DataFrameTest extends TestCase {
         assertEquals(expectedDf.getColumns(), selectedDf.getColumns());
         assertEquals(expectedDf.getData(), selectedDf.getData());
     }
+
+
+    public void testAdvancedSelectionWithColumnValue() {
+        List<String> columns = Arrays.asList("Name", "Age", "PartTime");
+        List<List<Object>> data = Arrays.asList(
+                Arrays.asList("Alice", 30, true),
+                Arrays.asList("Bob", 29, false),
+                Arrays.asList("Charlie", 25, false));
+    
+        DataFrame df = new DataFrame(columns, data);
+        DataFrame filteredDf = df.advancedSelectionWithColumnValue("PartTime", false); // Selecting rows where PartTime is false
+    
+        List<List<Object>> expectedData = Arrays.asList(
+                Arrays.asList("Bob", 29, false),
+                Arrays.asList("Charlie", 25, false));
+    
+        DataFrame expectedDf = new DataFrame(columns, expectedData);
+    
+        assertEquals(expectedDf.getData(), filteredDf.getData());
+    }
+    
     
     
 }
