@@ -17,16 +17,41 @@
   </dependencies>
 
   <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version> <!-- Utilisez cette version du plugin ou une plus récente si nécessaire -->
-                <configuration>
-                    <source>11</source> <!-- Version de source Java -->
-                    <target>11</target> <!-- Version de cible Java -->
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+      <plugins>
+          <!-- Plugin existant pour la compilation -->
+          <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-compiler-plugin</artifactId>
+              <version>3.8.1</version>
+              <configuration>
+                  <source>11</source>
+                  <target>11</target>
+              </configuration>
+          </plugin>
+          
+          <!-- Ajout du plugin JaCoCo -->
+          <plugin>
+              <groupId>org.jacoco</groupId>
+              <artifactId>jacoco-maven-plugin</artifactId>
+              <version>0.8.7</version>
+              <executions>
+                  <execution>
+                      <id>prepare-agent</id>
+                      <goals>
+                          <goal>prepare-agent</goal>
+                      </goals>
+                  </execution>
+                  <execution>
+                      <id>report</id>
+                      <phase>test</phase>
+                      <goals>
+                          <goal>report</goal>
+                      </goals>
+                  </execution>
+              </executions>
+          </plugin>
+      </plugins>
+  </build>
+
 </project>
+
