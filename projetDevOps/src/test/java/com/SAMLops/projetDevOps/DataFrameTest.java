@@ -123,6 +123,8 @@ public class DataFrameTest extends TestCase {
     }
 
 
+    /*************Tests de Selection*******************/
+
     public void testSelectRowsByIndices() {
         List<String> columns = Arrays.asList("Name", "Age", "Score");
         List<List<Object>> data = Arrays.asList(
@@ -141,5 +143,27 @@ public class DataFrameTest extends TestCase {
     
         assertEquals(expectedDf.getData(), selectedDf.getData());
     }
+
+
+    public void testSelectColumnsByLabels() {
+        List<String> columns = Arrays.asList("Name", "Age", "Salary");
+        List<List<Object>> data = Arrays.asList(
+                Arrays.asList("Alice", 30, 2500),
+                Arrays.asList("Bob", 29, 3200));
+    
+        DataFrame df = new DataFrame(columns, data);
+        DataFrame selectedDf = df.selectColumnsByLabels(Arrays.asList("Name", "Salary")); // Selecting only Name and Salary
+    
+        List<String> expectedColumns = Arrays.asList("Name", "Salary");
+        List<List<Object>> expectedData = Arrays.asList(
+                Arrays.asList("Alice", 2500),
+                Arrays.asList("Bob", 3200));
+    
+        DataFrame expectedDf = new DataFrame(expectedColumns, expectedData);
+    
+        assertEquals(expectedDf.getColumns(), selectedDf.getColumns());
+        assertEquals(expectedDf.getData(), selectedDf.getData());
+    }
+    
     
 }
