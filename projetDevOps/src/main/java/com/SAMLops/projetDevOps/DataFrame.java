@@ -167,6 +167,30 @@ class DataFrame {
         return new DataFrame(new ArrayList<>(columns), newData);
     }
 
+
+    public DataFrame selectColumnsByLabels(List<String> selectedColumns) {
+        List<Integer> indices = new ArrayList<>();
+        for (String col : selectedColumns) {
+            int index = columns.indexOf(col);
+            if (index != -1) {
+                indices.add(index);
+            }
+        }
+    
+        List<List<Object>> newData = new ArrayList<>();
+        for (List<Object> row : data) {
+            List<Object> newRow = new ArrayList<>();
+            for (int index : indices) {
+                newRow.add(row.get(index));
+            }
+            newData.add(newRow);
+        }
+    
+        return new DataFrame(selectedColumns, newData);
+    }
+    
+    
+
     /*Statistique functions */
     //fontion qui calcule le moyennage
     public Double calculateMean(String columnName) throws IndexOutOfBoundsException {
