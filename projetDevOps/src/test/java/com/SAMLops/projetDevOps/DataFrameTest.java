@@ -123,6 +123,57 @@ public class DataFrameTest extends TestCase {
         assertEquals(expectedOutput.trim(), outContent.toString().trim());
     }
 
+    // csv
+    public void testDisplayFirstRowsCSv() throws IOException {
+        String path = "src/test/resources/csvFile.csv";
+        DataFrame df = new DataFrame(path);
+        df.getData();
+        // L'affichage des 2 premières lignes
+        df.displayFirstRows(2);
+        String expectedOutput = "Nom\tAge\tVille\t\nJohn Doe\t30\tNew York\t\nJane Smith\t25\tLondon\t\n";
+        assertEquals(expectedOutput.trim(), outContent.toString().trim());
+
+        // Nettoyage pour le prochain test
+        outContent.reset();
+
+    }
+
+    public void testDisplayLastRowsCSv() throws IOException {
+        String path = "src/test/resources/csvFile.csv";
+        DataFrame df = new DataFrame(path);
+        df.getData();
+        // L'affichage dernier ligne
+        df.displayLastRows(1);
+        String expectedOutput = "Nom\tAge\tVille\t\nBob Anderson\t40\tTokyo\t\n";
+        assertEquals(expectedOutput.trim(), outContent.toString().trim());
+
+        // Nettoyage pour le prochain test
+        outContent.reset();
+
+    }
+
+    public void testCSVColumnHeadersAndTypeDetermination() throws IOException {
+        String path = "src/test/resources/csvFile.csv";
+        DataFrame df = new DataFrame(path);
+
+        List<String> expectedColumns = Arrays.asList("Nom", "Age", "Ville");
+        assertEquals(expectedColumns, df.getColumns());
+
+        List<Class<?>> expectedTypes = Arrays.asList(String.class, Integer.class, String.class);
+        assertEquals(expectedTypes, df.getColumnTypes());
+    }
+
+    public void testCSVDataConversion() throws IOException {
+        String path = "src/test/resources/csvFile.csv";
+        DataFrame df = new DataFrame(path);
+        List<List<Object>> expectedData = Arrays.asList(
+                Arrays.asList("John Doe", 30, "New York"),
+                Arrays.asList("Jane Smith", 25, "London"),
+                Arrays.asList("Alice Johnson", 35, "Paris"),
+                Arrays.asList("Bob Anderson", 40, "Tokyo"));
+        assertEquals(expectedData, df.getData());
+    }
+
     public void testCSVConstructor() throws IOException {
         String path = "src/test/resources/csvFile.csv"; // Chemin vers un
         // fichier CSV
