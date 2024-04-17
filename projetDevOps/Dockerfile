@@ -1,3 +1,4 @@
+
 FROM maven:3.8.1-openjdk-11 AS build
 COPY . /usr/src/myapp
 WORKDIR /usr/src/myapp
