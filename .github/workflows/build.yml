@@ -7,6 +7,7 @@
 # documentation.
 
 name: test biblio build_docker and test_code_cover
+
 on:
   push:
     branches: ["*"]
@@ -26,11 +27,12 @@ jobs:
           java-version: "17"
           distribution: "temurin"
           cache: maven
+          
       # Exécution des tests avec Maven
-      - name: test with Maven
+      - name: Test with Maven
         working-directory: projetDevOps
         run: mvn clean test
-      # Configuration Docker Buildx
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
       # Construction de l'image Docker
@@ -46,4 +48,5 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: mohamira12/SAMLops
+
           
