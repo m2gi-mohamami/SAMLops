@@ -1,6 +1,10 @@
 package com.SAMLops.projetDevOps;
 
+import java.io.BufferedReader; // Import the BufferedReader class
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 // Define a class to represent a DataFrame
@@ -13,6 +17,72 @@ class DataFrame {
         this.columns = columns;
         this.data = data;
         this.columnTypes = determineColumnTypes(data);
+    }
+
+    public DataFrame(String filePath) throws IOException {
+        this.columns = new ArrayList<>();
+        this.data = new ArrayList<>();
+        this.columnTypes = new ArrayList<>();
+
+        parseCSV(filePath);
+    }
+
+    private void parseCSV(String filePath) throws IOException {
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            // Lire les noms de colonnes de la première ligne
+            this.columns = Arrays.asList(br.readLine().split(","));
+
+            // Utiliser la deuxième ligne pour déduire les types de colonnes
+            String row = br.readLine(); // Cette ligne pourrait être utilisée pour déduire les types
+            String[] sampleValues = row.split(",");
+            for (String value : sampleValues) {
+                this.columnTypes.add(determineType(value));
+            }
+
+            // Lire et convertir les données des lignes suivantes
+
+            while (row != null) {
+                List<Object> rowData = new ArrayList<>();
+                String[] values = row.split(",");
+                for (int i = 0; i < values.length; i++) {
+                    rowData.add(convertToType(values[i], this.columnTypes.get(i)));
+
+                }
+                this.data.add(rowData);
+                row = br.readLine();
+
+            }
+
+        }
+
+    }
+
+    private Class<?> determineType(String value) {
+        try {
+            Integer.parseInt(value);
+            return Integer.class;
+        } catch (NumberFormatException e1) {
+            try {
+                Double.parseDouble(value);
+                return Double.class;
+            } catch (NumberFormatException e2) {
+                if (value.equalsIgnoreCase("true") || value.equalsIgnoreCase("false")) {
+                    return Boolean.class;
+                }
+            }
+        }
+        return String.class; // Par défaut, utiliser String si aucun autre type ne correspond
+    }
+
+    private Object convertToType(String value, Class<?> type) {
+        if (type.equals(Integer.class)) {
+            return Integer.parseInt(value);
+        } else if (type.equals(Double.class)) {
+            return Double.parseDouble(value);
+        } else if (type.equals(Boolean.class)) {
+            return Boolean.parseBoolean(value);
+        }
+        return value; // Si le type est String, retourner la valeur sans conversion
     }
 
     private List<Class<?>> determineColumnTypes(List<List<Object>> data) {
@@ -83,6 +153,133 @@ class DataFrame {
         }
     }
 
+
+    /******************SELECTION*********************/
+
+    //ROWS 
+    public DataFrame selectRowsByIndices(List<Integer> indices) {
+        List<List<Object>> newData = new ArrayList<>();
+        for (int index : indices) {
+            if (index >= 0 && index < data.size()) {
+                newData.add(new ArrayList<>(data.get(index)));
+            }
+        }
+        return new DataFrame(new ArrayList<>(columns), newData);
+    }
+
+
+    public DataFrame selectColumnsByLabels(List<String> selectedColumns) {
+        List<Integer> indices = new ArrayList<>();
+        for (String col : selectedColumns) {
+            int index = columns.indexOf(col);
+            if (index != -1) {
+                indices.add(index);
+            }
+        }
+    
+        List<List<Object>> newData = new ArrayList<>();
+        for (List<Object> row : data) {
+            List<Object> newRow = new ArrayList<>();
+            for (int index : indices) {
+                newRow.add(row.get(index));
+            }
+            newData.add(newRow);
+        }
+    
+        return new DataFrame(selectedColumns, newData);
+    }
+
+
+    public DataFrame advancedSelectionWithColumnValue(String columnName, Object value) {
+        int columnIndex = columns.indexOf(columnName);
+        if (columnIndex == -1) {
+            return null; // Column not found
+        }
+    
+        List<List<Object>> newData = new ArrayList<>();
+        for (List<Object> row : data) {
+            if (row.get(columnIndex).equals(value)) {
+                newData.add(new ArrayList<>(row));
+            }
+        }
+    
+        return new DataFrame(new ArrayList<>(columns), newData);
+    }
+     
+
+    /*Statistique functions */
+    //fontion qui calcule le moyennage
+    public Double calculateMean(String columnName) throws IndexOutOfBoundsException {
+        int columnIndex = columns.indexOf(columnName);
+        if (columnIndex == -1) throw new IndexOutOfBoundsException("Column not found: " + columnName);
+        if (!isValidNumericColumn(columnIndex)) {
+            throw new IllegalArgumentException("Column must be of type Integer or Double");
+        }
+        double sum = 0;
+        int count = 0;
+        for (List<Object> row : data) {
+            try {
+                Object value = row.get(columnIndex);
+                if (value instanceof Number) {
+                    sum += ((Number) value).doubleValue();
+                    count++;
+                }
+            } catch (IndexOutOfBoundsException e) {
+                System.err.println(e.getMessage());
+            }
+        }
+        return count > 0 ? sum / count : null;
+    }
+    
+    //fonction qui calcule la minima de column selected
+    public Object calculateMin(String columnName) throws IndexOutOfBoundsException {
+        int columnIndex = columns.indexOf(columnName);
+        if (columnIndex == -1) throw new IndexOutOfBoundsException("Column not found: " + columnName);
+        if (!isValidNumericColumn(columnIndex)) {
+            throw new IllegalArgumentException("Column must be of type Integer or Double");
+        }
+        Object min = null;
+        for (List<Object> row : data) {
+            try {
+                Object value = row.get(columnIndex);
+                if (value instanceof Comparable && (min == null || ((Comparable) value).compareTo(min) < 0)) {
+                    min = value;
+                }
+            } catch (IndexOutOfBoundsException e) {
+                System.err.println(e.getMessage());
+            }
+        }
+        return min;
+    }
+    
+    //fonction qui calcule la maxima de column selected
+    public Object calculateMax(String columnName) throws IndexOutOfBoundsException {
+        int columnIndex = columns.indexOf(columnName);
+        if (columnIndex == -1) throw new IndexOutOfBoundsException("Column not found: " + columnName);
+        if (!isValidNumericColumn(columnIndex)) {
+            throw new IllegalArgumentException("Column must be of type Integer or Double");
+        }
+        Object max = null;
+        for (List<Object> row : data) {
+            try {
+                Object value = row.get(columnIndex);
+                if (value instanceof Comparable && (max == null || ((Comparable) value).compareTo(max) > 0)) {
+                    max = value;
+                }
+            } catch (IndexOutOfBoundsException e) {
+                System.err.println(e.getMessage());
+            }
+        }
+        return max;
+    }
+    
+    //fonction qui verifie si le colonne est numérique ou pas
+    public boolean isValidNumericColumn(int columnIndex) {
+        Class<?> columnType = columnTypes.get(columnIndex);
+        return columnType.equals(Integer.class) || columnType.equals(Double.class);
+    }
+    
+    
     public List<String> getColumns() {
         return columns;
     }
