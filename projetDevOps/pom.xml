@@ -50,6 +50,36 @@
           </execution>
         </executions>
       </plugin>
+      <!-- Plugin pour générer maven site-->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-site-plugin</artifactId>
+        <version>3.9.1</version>
+
+      </plugin>
+      <!-- Plugin pour générer la Javadoc  -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>3.3.1</version>
+        <configuration>
+          <additionalparam>-Xdoclint:none</additionalparam> <!-- Désactiver les contrôles de lint
+          pour les docs -->
+          <outputDirectory>${project.build.directory}/../docs</outputDirectory>
+        </configuration>
+        <executions>
+          <execution>
+            <id>generate-javadoc</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+            <phase>package</phase>
+
+          </execution>
+        </executions>
+      </plugin>
+
+
       <!-- Plugin pour créer un JAR exécutable -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
