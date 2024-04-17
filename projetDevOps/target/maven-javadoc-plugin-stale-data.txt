@@ -1,0 +1,46 @@
+@options
+@packages
+-encoding
+'UTF-8'
+-protected
+-sourcepath
+'/home/amira/Documents/S8/DEVOPS/notreProjet/SAMLops/projetDevOps/src/main/java:/home/amira/Documents/S8/DEVOPS/notreProjet/SAMLops/projetDevOps/target/generated-sources/annotations'
+-author
+-bottom
+'Copyright &#169; 2024. All rights reserved.'
+-charset
+'UTF-8'
+-d
+'/home/amira/Documents/S8/DEVOPS/notreProjet/SAMLops/projetDevOps/target/../docs'
+-docencoding
+'UTF-8'
+-doctitle
+'projetDevOps 1.0-SNAPSHOT API'
+-linkoffline
+'https://docs.oracle.com/en/java/javase/11/docs/api' '/home/amira/Documents/S8/DEVOPS/notreProjet/SAMLops/projetDevOps/target/javadoc-bundle-options'
+-use
+-version
+-windowtitle
+'projetDevOps 1.0-SNAPSHOT API'
+com.SAMLops.projetDevOps
+/home/amira/Documents/S8/DEVOPS/notreProjet/SAMLops/projetDevOps/src/main/java = 1712995467268
+/home/amira/Documents/S8/DEVOPS/notreProjet/SAMLops/projetDevOps/target/generated-sources/annotations = 1713336065115
+/home/amira/Documents/S8/DEVOPS/notreProjet/SAMLops/projetDevOps/docs/link.svg = 1713336072407
+/home/amira/Documents/S8/DEVOPS/notreProjet/SAMLops/projetDevOps/docs/module-search-index.js = 1713336072363
+/home/amira/Documents/S8/DEVOPS/notreProjet/SAMLops/projetDevOps/docs/package-search-index.js = 1713336072363
+/home/amira/Documents/S8/DEVOPS/notreProjet/SAMLops/projetDevOps/docs/index-all.html = 1713336072383
+/home/amira/Documents/S8/DEVOPS/notreProjet/SAMLops/projetDevOps/docs/allpackages-index.html = 1713336072363
+/home/amira/Documents/S8/DEVOPS/notreProjet/SAMLops/projetDevOps/docs/search.html = 1713336072387
+/home/amira/Documents/S8/DEVOPS/notreProjet/SAMLops/projetDevOps/docs/member-search-index.js = 1713336072367
+/home/amira/Documents/S8/DEVOPS/notreProjet/SAMLops/projetDevOps/docs/search.js = 1713336072411
+/home/amira/Documents/S8/DEVOPS/notreProjet/SAMLops/projetDevOps/docs/allclasses-index.html = 1713336072359
+/home/amira/Documents/S8/DEVOPS/notreProjet/SAMLops/projetDevOps/docs/element-list = 1713336072291
+/home/amira/Documents/S8/DEVOPS/notreProjet/SAMLops/projetDevOps/docs/overview-tree.html = 1713336072343
+/home/amira/Documents/S8/DEVOPS/notreProjet/SAMLops/projetDevOps/docs/index.html = 1713336072387
+/home/amira/Documents/S8/DEVOPS/notreProjet/SAMLops/projetDevOps/docs/script.js = 1713336072407
+/home/amira/Documents/S8/DEVOPS/notreProjet/SAMLops/projetDevOps/docs/tag-search-index.js = 1713336072367
+/home/amira/Documents/S8/DEVOPS/notreProjet/SAMLops/projetDevOps/docs/search-page.js = 1713336072411
+/home/amira/Documents/S8/DEVOPS/notreProjet/SAMLops/projetDevOps/docs/stylesheet.css = 1713336072403
+/home/amira/Documents/S8/DEVOPS/notreProjet/SAMLops/projetDevOps/docs/help-doc.html = 1713336072403
+/home/amira/Documents/S8/DEVOPS/notreProjet/SAMLops/projetDevOps/docs/type-search-index.js = 1713336072363
+/home/amira/Documents/S8/DEVOPS/notreProjet/SAMLops/projetDevOps/docs/copy.svg = 1713336072407
