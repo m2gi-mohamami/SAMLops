@@ -34,7 +34,7 @@ jobs:
         uses: docker/setup-buildx-action@v1
 
       - name: Build Docker image
-        run: docker build -t samlops .
+        run: docker build -t samlops -f projetDevOps/Dockerfile .
 
-      - name: Run Docker container
+      - name: Run Docker image
         run: docker run samlops
