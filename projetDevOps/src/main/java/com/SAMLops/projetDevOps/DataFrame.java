@@ -8,10 +8,14 @@ import java.util.Arrays;
 import java.util.List;
 
 // Define a class to represent a DataFrame
-class DataFrame {
+public class DataFrame {
     List<String> columns;
     List<List<Object>> data;
     List<Class<?>> columnTypes;
+
+    public static void main(String[] args) {
+
+    }
 
     public DataFrame(List<String> columns, List<List<Object>> data) {
         this.columns = columns;
@@ -153,10 +157,9 @@ class DataFrame {
         }
     }
 
+    /****************** SELECTION *********************/
 
-    /******************SELECTION*********************/
-
-    //ROWS 
+    // ROWS
     public DataFrame selectRowsByIndices(List<Integer> indices) {
         List<List<Object>> newData = new ArrayList<>();
         for (int index : indices) {
@@ -167,7 +170,6 @@ class DataFrame {
         return new DataFrame(new ArrayList<>(columns), newData);
     }
 
-
     public DataFrame selectColumnsByLabels(List<String> selectedColumns) {
         List<Integer> indices = new ArrayList<>();
         for (String col : selectedColumns) {
@@ -176,7 +178,7 @@ class DataFrame {
                 indices.add(index);
             }
         }
-    
+
         List<List<Object>> newData = new ArrayList<>();
         for (List<Object> row : data) {
             List<Object> newRow = new ArrayList<>();
@@ -185,33 +187,32 @@ class DataFrame {
             }
             newData.add(newRow);
         }
-    
+
         return new DataFrame(selectedColumns, newData);
     }
-
 
     public DataFrame advancedSelectionWithColumnValue(String columnName, Object value) {
         int columnIndex = columns.indexOf(columnName);
         if (columnIndex == -1) {
             return null; // Column not found
         }
-    
+
         List<List<Object>> newData = new ArrayList<>();
         for (List<Object> row : data) {
             if (row.get(columnIndex).equals(value)) {
                 newData.add(new ArrayList<>(row));
             }
         }
-    
+
         return new DataFrame(new ArrayList<>(columns), newData);
     }
-     
 
-    /*Statistique functions */
-    //fontion qui calcule le moyennage
+    /* Statistique functions */
+    // fontion qui calcule le moyennage
     public Double calculateMean(String columnName) throws IndexOutOfBoundsException {
         int columnIndex = columns.indexOf(columnName);
-        if (columnIndex == -1) throw new IndexOutOfBoundsException("Column not found: " + columnName);
+        if (columnIndex == -1)
+            throw new IndexOutOfBoundsException("Column not found: " + columnName);
         if (!isValidNumericColumn(columnIndex)) {
             throw new IllegalArgumentException("Column must be of type Integer or Double");
         }
@@ -230,11 +231,12 @@ class DataFrame {
         }
         return count > 0 ? sum / count : null;
     }
-    
-    //fonction qui calcule la minima de column selected
+
+    // fonction qui calcule la minima de column selected
     public Object calculateMin(String columnName) throws IndexOutOfBoundsException {
         int columnIndex = columns.indexOf(columnName);
-        if (columnIndex == -1) throw new IndexOutOfBoundsException("Column not found: " + columnName);
+        if (columnIndex == -1)
+            throw new IndexOutOfBoundsException("Column not found: " + columnName);
         if (!isValidNumericColumn(columnIndex)) {
             throw new IllegalArgumentException("Column must be of type Integer or Double");
         }
@@ -251,11 +253,12 @@ class DataFrame {
         }
         return min;
     }
-    
-    //fonction qui calcule la maxima de column selected
+
+    // fonction qui calcule la maxima de column selected
     public Object calculateMax(String columnName) throws IndexOutOfBoundsException {
         int columnIndex = columns.indexOf(columnName);
-        if (columnIndex == -1) throw new IndexOutOfBoundsException("Column not found: " + columnName);
+        if (columnIndex == -1)
+            throw new IndexOutOfBoundsException("Column not found: " + columnName);
         if (!isValidNumericColumn(columnIndex)) {
             throw new IllegalArgumentException("Column must be of type Integer or Double");
         }
@@ -272,14 +275,13 @@ class DataFrame {
         }
         return max;
     }
-    
-    //fonction qui verifie si le colonne est numérique ou pas
+
+    // fonction qui verifie si le colonne est numérique ou pas
     public boolean isValidNumericColumn(int columnIndex) {
         Class<?> columnType = columnTypes.get(columnIndex);
         return columnType.equals(Integer.class) || columnType.equals(Double.class);
     }
-    
-    
+
     public List<String> getColumns() {
         return columns;
     }
