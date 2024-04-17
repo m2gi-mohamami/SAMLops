@@ -42,15 +42,15 @@ jobs:
         
       #Add generate-javadoc
       - name: Generate Javadoc
-        working-directory: projetDevOps/docs
-        run: mvn clean package
+        working-directory: projetDevOps
+        run: mvn javadoc:javadoc
         
       
       - name: Pages Deployment
         uses: peaceiris/actions-gh-pages@v3
         with:
             github_token: ${{ secrets.GITHUB_TOKEN }}
-            working-directory: projetDevOps/docs
+            working-directory: projetDevOps/docs/outputDirectory
             enable_jekyll: false
             
 
