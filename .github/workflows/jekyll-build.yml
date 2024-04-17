@@ -1,0 +1,33 @@
+name: Build Jekyll Site
+
+on:
+  push:
+    branches: [main, docs/**]  # Build Jekyll site when pushing to main or docs branches
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Ruby and Bundler
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: '3.0'  # Ensure compatibility with your Jekyll version
+
+    - name: Install dependencies
+      run: |
+        bundle install
+
+    - name: Build Jekyll site
+      run: |
+        bundle exec jekyll build --source ./docs --destination ./_site
+
+    - name: Upload Jekyll site as artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: jekyll-site
+        path: _site/
