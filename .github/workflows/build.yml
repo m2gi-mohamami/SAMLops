@@ -50,7 +50,7 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
             github_token: ${{ secrets.GITHUB_TOKEN }}
-            working-directory: projetDevOps/docs/outputDirectory
+            publish_dir: ./projetDevOps/target/docs/outputDirectory
             enable_jekyll: false
             
 
