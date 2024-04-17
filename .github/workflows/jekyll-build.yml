@@ -1,10 +1,10 @@
-name: Build Jekyll Site
+name: Jekyll Build and Deploy
 
 on:
   push:
-    branches: [main, docs/**]  # Build Jekyll site when pushing to main or docs branches
+    branches: - main 
   pull_request:
-    branches: [main]
+    branches: - main
 
 jobs:
   build-and-deploy:
@@ -26,8 +26,4 @@ jobs:
         bundle install
         bundle exec jekyll build
 
-    - name: Deploy to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./_site  # Set to your Jekyll site output directory
+    
