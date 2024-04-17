@@ -2,9 +2,11 @@ name: Jekyll Build and Deploy
 
 on:
   push:
-    branches: - main 
+    branches:
+      - main
   pull_request:
-    branches: - main
+    branches:
+      - main
 
 jobs:
   build-and-deploy:
@@ -13,17 +15,26 @@ jobs:
     steps:
     - uses: actions/checkout@v3
       with:
-        submodules: true  # Set this if your site uses submodules
+        submodules: true  # Necessary only if your site uses Git submodules
 
     - name: Setup Ruby
       uses: ruby/setup-ruby@v1
       with:
-        ruby-version: '3.0'  # Set to the Ruby version your Jekyll site uses
+        ruby-version: '3.0'  # Adjust according to the Ruby version defined in your Gemfile
 
-    - name: Build and test
+    - name: Install dependencies
+      working-directory: docs
       run: |
         gem install bundler
         bundle install
-        bundle exec jekyll build
 
-    
+    - name: Build Jekyll site
+      working-directory: docs
+      run: |
+        bundle exec jekyll build --trace  # '--trace' provides more verbose output to diagnose issues
+
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./docs/_site  # Ensure this path points to where your Jekyll build outputs the site files
