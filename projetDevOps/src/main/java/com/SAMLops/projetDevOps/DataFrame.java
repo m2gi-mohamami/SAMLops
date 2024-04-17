@@ -30,6 +30,7 @@ public class DataFrame {
 
         parseCSV(filePath);
     }
+    public DataFrame (){}
 
     private void parseCSV(String filePath) throws IOException {
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
@@ -61,7 +62,7 @@ public class DataFrame {
 
     }
 
-    private Class<?> determineType(String value) {
+    public Class<?> determineType(String value) {
         try {
             Integer.parseInt(value);
             return Integer.class;
@@ -78,7 +79,7 @@ public class DataFrame {
         return String.class; // Par défaut, utiliser String si aucun autre type ne correspond
     }
 
-    private Object convertToType(String value, Class<?> type) {
+    public Object convertToType(String value, Class<?> type) {
         if (type.equals(Integer.class)) {
             return Integer.parseInt(value);
         } else if (type.equals(Double.class)) {
