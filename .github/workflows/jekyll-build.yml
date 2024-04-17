@@ -23,18 +23,12 @@ jobs:
         ruby-version: '3.0'  # Adjust according to the Ruby version defined in your Gemfile
 
     - name: Install dependencies
-      working-directory: docs
       run: |
         gem install bundler
         bundle install
 
     - name: Build Jekyll site
-      working-directory: docs
       run: |
         bundle exec jekyll build --trace  # '--trace' provides more verbose output to diagnose issues
 
-    - name: Deploy to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./docs/_site  # Ensure this path points to where your Jekyll build outputs the site files
+   
