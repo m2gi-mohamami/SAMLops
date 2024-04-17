@@ -29,3 +29,12 @@ jobs:
       - name: Build with Maven
         working-directory: projetDevOps
         run: mvn clean test
+         # Add Docker build and run steps
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Build Docker image
+        run: docker build -t samlops .
+
+      - name: Run Docker container
+        run: docker run samlops

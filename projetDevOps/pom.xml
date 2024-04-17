@@ -25,6 +25,11 @@
                 <configuration>
                     <source>11</source> <!-- Version de source Java -->
                     <target>11</target> <!-- Version de cible Java -->
+                    <archive>
+                      <manifest>
+                          <mainClass>com.SAMLops.projetDevOps.DataFrameTest</mainClass>
+                      </manifest>
+                  </archive>
                 </configuration>
             </plugin>
         </plugins>
