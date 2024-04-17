@@ -45,10 +45,14 @@ jobs:
         working-directory: projetDevOps
         run: mvn clean package
         
-      - name: Deploy to GitHub Pages
+      
+      - name: Pages Deployment
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./projetDevOps/target/site  # Make sure this points to the directory where Javadoc is output.
+            github_token: ${{ secrets.GITHUB_TOKEN }}
+            publish_dir: ./docs
+            enable_jekyll: false
+            allow_empty_commit: false
+            force_orphan: true
+            publish_branch: github-pages
 
-        
