@@ -21,13 +21,13 @@ jobs:
         ruby-version: '3.0'  # Adjust according to the Ruby version defined in your Gemfile
 
     - name: Install dependencies
-      working-directory: projetDevOps/docs
+      working-directory: projetDevOps/docs/
       run: |
         gem install bundler
         bundle install
 
     - name: Build Jekyll site
-      working-directory: projetDevOps/docs
+      working-directory: projetDevOps/docs/
       run: |
         bundle exec jekyll build --trace  # '--trace' provides more verbose output to diagnose issues
 
