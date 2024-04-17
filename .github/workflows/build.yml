@@ -42,7 +42,7 @@ jobs:
         
       #Add generate-javadoc
       - name: Generate Javadoc
-        working-directory: projetDevOps
+        working-directory: projetDevOps/docs
         run: mvn clean package
         
       
@@ -51,7 +51,6 @@ jobs:
         with:
             github_token: ${{ secrets.GITHUB_TOKEN }}
             working-directory: projetDevOps/docs
-            keep_files: true
             enable_jekyll: false
             
 
