@@ -6,7 +6,7 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: test biblio and build docker
+name: test biblio build_docker and test_code_cover
 on:
   push:
     branches: ["*"]
@@ -19,26 +19,28 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+      # Configuration JDK 17
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
           java-version: "17"
           distribution: "temurin"
           cache: maven
+      # Exécution des tests avec Maven
       - name: test with Maven
         working-directory: projetDevOps
         run: mvn clean test
-      # Add Docker build and run steps
+      # Configuration Docker Buildx
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
-
+      # Construction de l'image Docker
       - name: Build Docker image
         working-directory: projetDevOps
         run: docker build -t samlops .
-
+      # Exécution de l'image Docker
       - name: Run Docker image
         run: docker run samlops
-        
+      # Ajout des rapports de couverture de code
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v4.0.1
         with:

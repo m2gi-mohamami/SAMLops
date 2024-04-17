@@ -385,23 +385,23 @@ public class DataFrameTest extends TestCase {
 
     }
 
+             // Test pour determineType
+    public void testDetermineType() {
+                DataFrame dataFrame = new DataFrame();
+        
+        assertEquals(Integer.class, dataFrame.determineType("123"));
+        assertEquals(String.class, dataFrame.determineType("qwerty"));
+        assertEquals(Double.class, dataFrame.determineType("123.45"));
+        assertEquals(Boolean.class, dataFrame.determineType("true"));
+        assertEquals(String.class, dataFrame.determineType(""));
 
-        public void testDetermineType() {
-                    DataFrame dataFrame = new DataFrame();
-            
-            assertEquals(Integer.class, dataFrame.determineType("123"));
-            assertEquals(String.class, dataFrame.determineType("qwerty"));
-            assertEquals(Double.class, dataFrame.determineType("123.45"));
-            assertEquals(Boolean.class, dataFrame.determineType("true"));
-            assertEquals(String.class, dataFrame.determineType(""));
-
-        }
-
-         public void testConvertToType() {
-                    DataFrame dataFrame = new DataFrame();
-            assertEquals(123.45, dataFrame.convertToType("123.45", Double.class));
-            assertEquals(false, dataFrame.convertToType("false", Boolean.class));
+    }
+            // Test pour dconvertToType
+        public void testConvertToType() {
+                DataFrame dataFrame = new DataFrame();
+        assertEquals(123.45, dataFrame.convertToType("123.45", Double.class));
+        assertEquals(false, dataFrame.convertToType("false", Boolean.class));
 
 
-        }
+    }
 }
