@@ -7,27 +7,27 @@ on:
     branches: [main]
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v3
+      with:
+        submodules: true  # Set this if your site uses submodules
 
-    - name: Set up Ruby and Bundler
+    - name: Setup Ruby
       uses: ruby/setup-ruby@v1
       with:
-        ruby-version: '3.0'  # Ensure compatibility with your Jekyll version
+        ruby-version: '3.0'  # Set to the Ruby version your Jekyll site uses
 
-    - name: Install dependencies
+    - name: Build and test
       run: |
+        gem install bundler
         bundle install
+        bundle exec jekyll build
 
-    - name: Build Jekyll site
-      run: |
-        bundle exec jekyll build --source ./docs --destination ./_site
-
-    - name: Upload Jekyll site as artifact
-      uses: actions/upload-artifact@v2
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
       with:
-        name: jekyll-site
-        path: _site/
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./_site  # Set to your Jekyll site output directory
